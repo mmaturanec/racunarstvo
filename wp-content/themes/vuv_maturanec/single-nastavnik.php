@@ -9,6 +9,9 @@ get_header();
 
 if ( have_posts() )
 {
+    $titula_prefiks = get_post_meta($post->ID, 'titula_prefiks_nastavnika', true);
+$titula_sufiks = get_post_meta($post->ID, 'titula_sufiks_nastavnika', true);
+
     $oNaslovnaZvanja = wp_get_post_terms( $post->ID, 'naslovno_zvanje' );
 $sNaslovnoZvanje = "-";
 if(sizeof($oNaslovnaZvanja)>0)
@@ -21,6 +24,8 @@ while ( have_posts() )
     echo '<div class="container">
 <div class="row">
   <div class="col-6">
+  '.$titula_prefiks.' '.$post->post_title.' '.$titula_sufiks.'
+    </br>
   Uloga: '.$sNaslovnoZvanje.'
   </div>
 
@@ -29,7 +34,6 @@ while ( have_posts() )
 </div>';
 
     the_post();
-the_title();
 if(get_the_post_thumbnail_url($post->ID))
 {
     $sIstaknutaSLika = get_the_post_thumbnail_url($post->ID);

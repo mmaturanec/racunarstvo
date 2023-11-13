@@ -51,7 +51,7 @@ array('jquery'), true);
 add_action( 'wp_enqueue_scripts', 'ucitaj_boostrap_min_js', 1 );
 function ucitaj_script_js()
 {
- wp_enqueue_script('glavni-bootstrap-min-js', get_template_directory_uri().'/js/scripts.js' ,
+ wp_enqueue_script('scripts-js', get_template_directory_uri().'/js/scripts.js' ,
 array('jquery'), true);
 }
 add_action( 'wp_enqueue_scripts', 'ucitaj_script_js', 1 );
@@ -403,4 +403,64 @@ function registriraj_predmet_cpt() {
             return $sHtml;
             }        
 //kraj lv3
+//priprema lv4
+function add_meta_box_titula()
+{
+add_meta_box( 'vsmti_nastavnik_titula', 'Titula', 'html_meta_box_nastavnik', 'nastavnik');
+}
+function html_meta_box_nastavnik($post)
+{
+wp_nonce_field('spremi_titlu_nastavnika', 'titula_prefiks_nonce');
+wp_nonce_field('spremi_titlu_nastavnika', 'titula_sufiks_nonce');
+//dohvaćanje meta vrijednosti
+$titula_prefiks = get_post_meta($post->ID, 'titula_prefiks_nastavnika', true);
+$titula_sufiks = get_post_meta($post->ID, 'titula_sufiks_nastavnika', true);
+echo '
+<div>
+<div>
+<label for="titula_prefiks_nastavnika">Titula prefiks nastavnika: </label>
+<input type="text" id="titula_prefiks_nastavnika"
+name="titula_prefiks_nastavnika" value="'.$titula_prefiks.'" />
+</div><br/>
+<div>
+<label for="titula_sufiks_nastavnika">Titula sufiks nastavnika: </label>
+<input type="text" id="titula_sufiks_nastavnika"
+name="titula_sufiks_nastavnika" value="'.$titula_sufiks.'" />
+</div>
+</div>';
+}
+function spremi_titlu_nastavnika($post_id)
+{
+$is_autosave = wp_is_post_autosave( $post_id );
+ $is_revision = wp_is_post_revision( $post_id );
+ $is_valid_nonce_titula_prefiks = ( isset( $_POST[ 'titula_prefiks_nonce' ] ) && wp_verify_nonce(
+$_POST[ 'titula_prefiks_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+ $is_valid_nonce_titula_sufiks = ( isset( $_POST[ 'titula_sufiks_nonce' ] ) && wp_verify_nonce(
+$_POST[ 'titula_sufiks_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+ if ( $is_autosave || $is_revision || !$is_valid_nonce_titula_prefiks ||
+!$is_valid_nonce_titula_sufiks) {
+ return;
+ }
+if(!empty($_POST['titula_prefiks_nastavnika']))
+{
+update_post_meta($post_id, 'titula_prefiks_nastavnika',
+$_POST['titula_prefiks_nastavnika']);
+}
+else
+{
+delete_post_meta($post_id, 'titula_prefiks_nastavnika');
+}
+if(!empty($_POST['titula_sufiks_nastavnika']))
+{
+update_post_meta($post_id, 'titula_sufiks_nastavnika',
+$_POST['titula_sufiks_nastavnika']);
+}
+else
+{
+delete_post_meta($post_id, 'titula_sufiks_nastavnika');
+}
+}
+add_action( 'add_meta_boxes', 'add_meta_box_titula' );
+add_action( 'save_post', 'spremi_titlu_nastavnika' );
+//kraj priprema lv4
 ?>

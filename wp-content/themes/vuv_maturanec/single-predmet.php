@@ -63,10 +63,22 @@ echo '<div class="container">
 }
 
 ?>
-<a href="/racunarstvo/predmet/"
+
+<div class="container mt-5">
+  <div class="row">
+    
+    <div class="col-10">
+    </div>
+    <div class="col-2">
+    <button class="btn btn-danger"><a href="/racunarstvo/predmet/"
  title="Povratak na sve predmete" class="yellowButton">
-Povratak na sve predmete
+Povratak
 </a> 
+</button>
+    </div>
+  </div>
+</div>
+
     </div>
 </main>
 <?php
