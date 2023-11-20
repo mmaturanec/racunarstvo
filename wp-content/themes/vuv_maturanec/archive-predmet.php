@@ -21,19 +21,120 @@ echo '<div class="container">';
 <?php
 echo '<h2>1. godina</h2>';
 echo '<h5>I. semestar</h5>';
-echo daj_predmete( 'isemestar' );
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
+    echo daj_predmete( 'isemestar' ); 
+    echo '
+  </tbody>
+</table>
+';
+
 echo '<h5>II. semestar</h5>';
-echo daj_predmete( 'iisemestar' );
+
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
+  echo daj_predmete( 'iisemestar' );
+    echo '
+  </tbody>
+</table>
+';
+
 echo '<h2>2. godina</h2>';
 echo '<h5>III. semestar</h5>';
-echo daj_predmete( 'iiisemestar' );
+
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
+  echo daj_predmete( 'iiisemestar' );
+    echo '
+  </tbody>
+</table>
+';
 echo '<h5>IV. semestar</h5>';
-echo daj_predmete( 'ivsemestar' );
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
+  echo daj_predmete( 'ivsemestar' );
+    echo '
+  </tbody>
+</table>
+';
 echo '<h2>3.godina</h2>';
 echo '<h5>V. semestar</h5>';
-echo daj_predmete( 'vsemestar' );
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
+  echo daj_predmete( 'vsemestar' );
+    echo '
+  </tbody>
+</table>
+';
 echo '<h5>VI. semestar</h5>';
+echo '
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" width="50%">Naziv predmeta</th>
+      <th scope="col">ECTS bodova</th>
+      <th scope="col">P</th>
+      <th scope="col">LV</th>
+      <th scope="col">KV</th>
+    </tr>
+  </thead>
+  <tbody>';
 echo daj_predmete( 'visemestar' );
+
+    echo '
+  </tbody>
+</table>
+';
 echo '</div>';
 ?>
  </main>

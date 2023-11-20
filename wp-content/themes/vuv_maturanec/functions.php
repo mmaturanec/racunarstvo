@@ -392,14 +392,24 @@ function registriraj_predmet_cpt() {
             )
             ));
             $nastavnici = get_posts( $args );
-            $sHtml = "<ul>";
+
+ 
+       
+
+            $sHtml = "";
             foreach ($nastavnici as $nastavnik)
             {
             $sNastavnikUrl = $nastavnik->guid;
             $sNastavnikNaziv = $nastavnik->post_title;
-            $sHtml .= '<li><a href="'.$sNastavnikUrl.'">'.$sNastavnikNaziv.'</a></li>';
+
+            $satipredavanja = $nastavnik->satipredavanja_predmet;
+            $ects =  $nastavnik->ects_predmet;
+            $satilabosa =  $nastavnik->satipredavanja_predmet;
+            $satikonstr =  $nastavnik->satipredavanja_predmet;
+        
+            $sHtml .= '<tr><td><a href="'.$sNastavnikUrl.'">'.$sNastavnikNaziv.'</a></td><td>'.$ects.'</td><td>'.$satipredavanja.'</td><td>'.$satilabosa.'</td><td>'.$satikonstr.'</td></tr>';
             }
-            $sHtml .= "</ul>";
+            $sHtml .= "";
             return $sHtml;
             }        
 //kraj lv3
@@ -463,4 +473,202 @@ delete_post_meta($post_id, 'titula_sufiks_nastavnika');
 add_action( 'add_meta_boxes', 'add_meta_box_titula' );
 add_action( 'save_post', 'spremi_titlu_nastavnika' );
 //kraj priprema lv4
+//lv4
+function add_meta_box_predmet()
+{
+add_meta_box( 'vuv_predmet', 'Predmet', 'html_meta_box_predmet', 'predmet');
+}
+function html_meta_box_predmet($post)
+{
+wp_nonce_field('spremi_info_predmet', 'ects_nonce');
+wp_nonce_field('spremi_info_predmet', 'satipredavanja_nonce');
+wp_nonce_field('spremi_info_predmet', 'satilabosa_nonce');
+wp_nonce_field('spremi_info_predmet', 'satikonstr_nonce');
+
+wp_nonce_field('spremi_info_predmet', 'nastavnici_nonce');
+
+
+//dohvaćanje meta vrijednosti
+$ects = get_post_meta($post->ID, 'ects_predmet', true);
+$satipredavanja = get_post_meta($post->ID, 'satipredavanja_predmet', true);
+$satilabosa = get_post_meta($post->ID, 'satilabosa_predmet', true);
+$satikonstr = get_post_meta($post->ID, 'satikonstr_predmet', true);
+
+$nastavnici = get_post_meta($post->ID, 'nastavnici', true);
+
+echo '
+<div>
+<div>
+<label for="ects_predmet">ECTS bodova: </label>
+<input type="number" id="ects_predmet"
+name="ects_predmet" value="'.$ects.'" />
+</div><br/>
+<div>
+<label for="satipredavanja_predmet">Sati predavanja: </label>
+<input type="number" id="satipredavanja_predmet"
+name="satipredavanja_predmet" value="'.$satipredavanja.'" />
+</div><br/>
+<div>
+<label for="satilabosa_predmet">Sati laboratorijskih vježbi: </label>
+<input type="number" id="satilabosa_predmet"
+name="satilabosa_predmet" value="'.$satilabosa.'" />
+</div><br/>
+<div>
+<label for="satikonstr_predmet">Sati konstrukcijskih vježbi: </label>
+<input type="number" id="satikonstr_predmet"
+name="satikonstr_predmet" value="'.$satikonstr.'" />
+</div><br/>
+<div>
+</div>
+</div>
+';
+}
+
+function spremi_predmet($post_id)
+{
+$is_autosave = wp_is_post_autosave( $post_id );
+ $is_revision = wp_is_post_revision( $post_id );
+ $is_valid_ects_nonce = ( isset( $_POST[ 'ects_nonce' ] ) && wp_verify_nonce(
+$_POST[ 'ects_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+$is_valid_satipredavanja_nonce = ( isset( $_POST[ 'satipredavanja_nonce' ] ) && wp_verify_nonce(
+    $_POST[ 'satipredavanja_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+    $is_valid_satilabosa_nonce = ( isset( $_POST[ 'satilabosa_nonce' ] ) && wp_verify_nonce(
+        $_POST[ 'satilabosa_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+        $is_valid_satikonstr_nonce = ( isset( $_POST[ 'satikonstr_nonce' ] ) && wp_verify_nonce(
+            $_POST[ 'satikonstr_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+    
+ if ( $is_autosave || $is_revision || !$is_valid_ects_nonce || !$is_valid_satipredavanja_nonce || !$is_valid_satilabosa_nonce || !$is_valid_satikonstr_nonce) {
+ return;
+ }
+if(!empty($_POST['ects_predmet']))
+{
+update_post_meta($post_id, 'ects_predmet',
+$_POST['ects_predmet']);
+}
+else
+{
+delete_post_meta($post_id, 'ects_predmet');
+}
+if(!empty($_POST['satipredavanja_predmet']))
+{
+update_post_meta($post_id, 'satipredavanja_predmet',
+$_POST['satipredavanja_predmet']);
+}
+else
+{
+delete_post_meta($post_id, 'satipredavanja_predmet');
+}
+if(!empty($_POST['satilabosa_predmet']))
+{
+update_post_meta($post_id, 'satilabosa_predmet',
+$_POST['satilabosa_predmet']);
+}
+else
+{
+delete_post_meta($post_id, 'satilabosa_predmet');
+}
+if(!empty($_POST['satikonstr_predmet']))
+{
+update_post_meta($post_id, 'satikonstr_predmet',
+$_POST['satikonstr_predmet']);
+}
+else
+{
+delete_post_meta($post_id, 'satikonstr_predmet');
+}
+}
+add_action( 'add_meta_boxes', 'add_meta_box_predmet' );
+add_action( 'save_post', 'spremi_predmet' );
+// kraj
+
+
+
+
+
+
+
+//SELECT BOX!!!!!
+add_action( 'admin_menu', 'rudr_metabox_for_select2' );
+add_action( 'save_post', 'rudr_save_metaboxdata', 10, 2 );
+
+/*
+ * Add a metabox
+ * I hope you're familiar with add_meta_box() function, so, nothing new for you here
+ */
+function rudr_metabox_for_select2() {
+	add_meta_box( 'rudr_select2', 'Odabir nastavnika', 'rudr_display_select2_metabox', 'predmet', 'normal', 'default' );
+}
+ 
+/*
+ * Display the fields inside it
+ */
+function rudr_display_select2_metabox( $post_object ) {
+	
+	// do not forget about WP Nonces for security purposes
+	
+	// I decided to write all the metabox html into a variable and then echo it at the end
+	$html = '';
+	
+	// always array because we have added [] to our <select> name attribute
+	$appended_tags = get_post_meta( $post_object->ID, 'rudr_select2_tags',true );
+	$appended_posts = get_post_meta( $post_object->ID, 'rudr_select2_posts',true );
+	
+	/*
+	 * It will be just a multiple select for tags without AJAX search
+	 * If no tags found - do not display anything
+	 * hide_empty=0 means to show tags not attached to any posts
+	 */
+    $argsS = array(
+        'posts_per_page' => -1,
+        'post_type' => 'nastavnik',
+        'post_status' => 'publish');
+        $nastavnici = get_posts( $argsS );
+        $nastavnici = get_posts( $argsS );
+        $nameNas = [];
+        foreach($nastavnici as $nas)
+        {
+            array_push($nameNas, $nas->post_title);
+        }
+	if( $tags = $nastavnici ) {
+		$html .= '<p><label for="rudr_select2_tags">Profesor:</label><br /><select id="rudr_select2_tags" name="rudr_select2_tags[]" multiple="multiple" style="width:99%;max-width:25em;">';
+		foreach( $tags as $tag ) {
+			$selected = ( is_array( $appended_tags ) && in_array( $tag->ID, $appended_tags ) ) ? ' selected="selected"' : '';
+			$html .= '<option value="' . $tag->ID . '"' . $selected . '>' . $tag->post_title . '</option>';
+		}
+		$html .= '<select></p>';
+
+	}
+  
+	echo $html;
+    
+}
+
+
+function rudr_save_metaboxdata( $post_id, $post ) {
+	
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
+ 
+	// if post type is different from our selected one, do nothing
+
+		if( isset( $_POST['rudr_select2_tags'] ) )
+        update_post_meta($post_id, 'rudr_select2_tags', $_POST[ 'rudr_select2_tags' ]);
+		else
+			delete_post_meta($post_id, 'rudr_select2_tags', $nastavnici);
+        
+		if( isset( $_POST['rudr_select2_posts'] ) )
+			update_post_meta( $post_id, 'rudr_select2_posts', $_POST['rudr_select2_posts'] );
+		else
+			delete_post_meta( $post_id, 'rudr_select2_posts' );
+	return $post_id;
+}
+add_action( 'admin_enqueue_scripts', 'rudr_select2_enqueue' );
+function rudr_select2_enqueue(){
+
+	wp_enqueue_style('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' );
+	wp_enqueue_script('select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js', array('jquery') );
+	
+	// please create also an empty JS file in your theme directory and include it too
+	wp_enqueue_script('mycustom', get_stylesheet_directory_uri() . '/mycustom.js', array( 'jquery', 'select2' ) ); 
+	
+}
 ?>

@@ -1,6 +1,8 @@
 <?php
 get_header();
+
 ?>
+
 <main>
     <div class="container">
     <h5>single-predmet.php</h5>
@@ -23,15 +25,31 @@ if(sizeof($oSemestar)>0)
 {
 $sSemestar = $oSemestar[0]->name;
 }
+$ectspredmet = get_post_meta($post->ID, 'ects_predmet', true);
+$satipredavanjapredmet = get_post_meta($post->ID, 'satipredavanja_predmet', true);
+$satilabosapredmet = get_post_meta($post->ID, 'satilabosa_predmet', true);
+$satikonstrpredmet = get_post_meta($post->ID, 'satikonstr_predmet', true);
+$profesori = get_post_meta($post->ID, 'rudr_select2_tags', true);
     $sIstaknutaSLika = "";
 while ( have_posts() )
 {
     echo '<div class="container">
 <div class="row">
   <div class="col-6">
- '.$sGodina.'/'.$sSemestar.'
+ '.$sGodina.'/'.$sSemestar.' </br> ECTS: '.$ectspredmet.' </br> Sati predavanja: '.$satipredavanjapredmet.'+'.$satilabosapredmet.'+'.$satikonstrpredmet.'
   </div>
-
+<div class="col-6">
+Profesori: </br>
+';
+foreach ($profesori as $prof)
+{
+    $post_title = get_the_title($prof);
+    $post_permalink = get_permalink($prof);
+    echo '<a href="'.$post_permalink.'">'.$post_title.'</a>' ;
+    echo '</br>';
+}
+echo '
+</div>
 
 </div>
 </div>';
