@@ -672,4 +672,5 @@ function rudr_select2_enqueue(){
 	wp_enqueue_script('mycustom', get_stylesheet_directory_uri() . '/mycustom.js', array( 'jquery', 'select2' ) ); 
 	
 }
+//PRIPREMA LV5
 ?>

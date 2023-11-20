@@ -74,7 +74,7 @@ echo '<div class="container">
   <img style="width: 400px;" class=img-fluid" src="'.$sIstaknutaSLika.'">
   </div>
   <div class="col-6">
-   '.$post->post_content.'
+   'the_content();'
   </div>
 
 </div>
