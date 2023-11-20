@@ -588,6 +588,7 @@ add_action( 'save_post', 'spremi_predmet' );
 
 
 //SELECT BOX!!!!!
+//KOPIRAJ SVE ISPOD DA RADI
 add_action( 'admin_menu', 'rudr_metabox_for_select2' );
 add_action( 'save_post', 'rudr_save_metaboxdata', 10, 2 );
 

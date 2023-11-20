@@ -29,7 +29,9 @@ $ectspredmet = get_post_meta($post->ID, 'ects_predmet', true);
 $satipredavanjapredmet = get_post_meta($post->ID, 'satipredavanja_predmet', true);
 $satilabosapredmet = get_post_meta($post->ID, 'satilabosa_predmet', true);
 $satikonstrpredmet = get_post_meta($post->ID, 'satikonstr_predmet', true);
+//učitavanje itema iz select2
 $profesori = get_post_meta($post->ID, 'rudr_select2_tags', true);
+//
     $sIstaknutaSLika = "";
 while ( have_posts() )
 {
@@ -41,6 +43,7 @@ while ( have_posts() )
 <div class="col-6">
 Profesori: </br>
 ';
+    //ispis itema iz select2 sa redirekcijom
 foreach ($profesori as $prof)
 {
     $post_title = get_the_title($prof);
@@ -48,6 +51,7 @@ foreach ($profesori as $prof)
     echo '<a href="'.$post_permalink.'">'.$post_title.'</a>' ;
     echo '</br>';
 }
+//
 echo '
 </div>
 
