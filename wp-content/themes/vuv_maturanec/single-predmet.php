@@ -32,6 +32,7 @@ $satikonstrpredmet = get_post_meta($post->ID, 'satikonstr_predmet', true);
 //učitavanje itema iz select2
 $profesori = get_post_meta($post->ID, 'rudr_select2_tags', true);
 //
+
     $sIstaknutaSLika = "";
 while ( have_posts() )
 {
@@ -44,13 +45,20 @@ while ( have_posts() )
 Profesori: </br>
 ';
     //ispis itema iz select2 sa redirekcijom
-foreach ($profesori as $prof)
-{
-    $post_title = get_the_title($prof);
-    $post_permalink = get_permalink($prof);
-    echo '<a href="'.$post_permalink.'">'.$post_title.'</a>' ;
-    echo '</br>';
-}
+    if( $profesori != null)
+    {
+        foreach ($profesori as $prof)
+        {
+            $post_title = get_the_title($prof);
+            $post_permalink = get_permalink($prof);
+            echo '<a href="'.$post_permalink.'">'.$post_title.'</a>' ;
+            echo '</br>';
+        }
+    }
+    else{
+        echo 'Predmet nema dodjeljenih profesora';
+    }
+
 //
 echo '
 </div>
@@ -74,7 +82,7 @@ echo '<div class="container">
   <img style="width: 400px;" class=img-fluid" src="'.$sIstaknutaSLika.'">
   </div>
   <div class="col-6">
-   'the_content();'
+   '.the_content().'
   </div>
 
 </div>
