@@ -11,6 +11,8 @@ if ( have_posts() )
 {
     $titula_prefiks = get_post_meta($post->ID, 'titula_prefiks_nastavnika', true);
 $titula_sufiks = get_post_meta($post->ID, 'titula_sufiks_nastavnika', true);
+$kabinet = get_post_meta($post->ID, 'kabinet', true);
+
 
     $oNaslovnaZvanja = wp_get_post_terms( $post->ID, 'naslovno_zvanje' );
 $sNaslovnoZvanje = "-";
@@ -27,11 +29,24 @@ while ( have_posts() )
   '.$titula_prefiks.' '.$post->post_title.' '.$titula_sufiks.'
     </br>
   Uloga: '.$sNaslovnoZvanje.'
+  </br>';
+  if($kabinet != null){
+    echo '  Kabinet: '.$kabinet.'
+    </div>
+  
+  
   </div>
+  </div>';
+  }
+  else
+  {
+    echo '</div>
+  
+  
+    </div>
+    </div>';
+  }
 
-
-</div>
-</div>';
 
     the_post();
 if(get_the_post_thumbnail_url($post->ID))

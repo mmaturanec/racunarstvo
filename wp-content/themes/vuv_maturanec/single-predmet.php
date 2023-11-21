@@ -29,6 +29,7 @@ $ectspredmet = get_post_meta($post->ID, 'ects_predmet', true);
 $satipredavanjapredmet = get_post_meta($post->ID, 'satipredavanja_predmet', true);
 $satilabosapredmet = get_post_meta($post->ID, 'satilabosa_predmet', true);
 $satikonstrpredmet = get_post_meta($post->ID, 'satikonstr_predmet', true);
+$vrstaPredmeta = get_post_meta($post->ID, 'status_predmeta', true);
 //učitavanje itema iz select2
 $profesori = get_post_meta($post->ID, 'rudr_select2_tags', true);
 //
@@ -39,7 +40,7 @@ while ( have_posts() )
     echo '<div class="container">
 <div class="row">
   <div class="col-6">
- '.$sGodina.'/'.$sSemestar.' </br> ECTS: '.$ectspredmet.' </br> Sati predavanja: '.$satipredavanjapredmet.'+'.$satilabosapredmet.'+'.$satikonstrpredmet.'
+ '.$sGodina.'/'.$sSemestar.' </br> ECTS: '.$ectspredmet.' </br> Sati predavanja: '.$satipredavanjapredmet.'+'.$satilabosapredmet.'+'.$satikonstrpredmet.' </br> Vrsta predmeta: '.$vrstaPredmeta.'
   </div>
 <div class="col-6">
 Profesori: </br>
